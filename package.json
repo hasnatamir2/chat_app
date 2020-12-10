@@ -5,12 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"nodemon server/server.js\" \"npm run client\"",
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
   "author": "Hasnat Amir",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "expect": "^26.6.2",
     "express": "^4.17.1",

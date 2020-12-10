@@ -6,7 +6,8 @@ var app = express();
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
-})); // Routes
+}));
+app.use(require("cors")()); // Routes
 
 app.use('/user', require('./routes/user'));
 app.use('/chatroom', require('./routes/chatRoom')); // Setup Error handlers

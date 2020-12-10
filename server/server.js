@@ -19,7 +19,7 @@ require('./models/ChatMessage')
 require('./models/ChatRoom')
 require('./models/User')
 
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 8080
 
 app.listen(port, () => {
     console.log(`server up and running on port ${port}`)
