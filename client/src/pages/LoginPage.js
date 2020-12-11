@@ -1,8 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import makeToast from '../Toaster'
+import { withRouter } from 'react-router-dom'
 
-export default function LoginPage({history}) {
+const LoginPage = ({history, setupSocket}) => {
     
     const emailRef = React.createRef()
     const passwordRef = React.createRef()
@@ -11,17 +12,17 @@ export default function LoginPage({history}) {
         const email = emailRef.current.value
         const password = passwordRef.current.value
 
-        axios.post('http://localhost:8080/user/login',{
+        axios.post('http://localhost:8081/user/login',{
             email,
             password,
         }).then( response =>{
             makeToast("success", response.data.message)
-            history.push("/dashboard")
             localStorage.setItem('DC_TOKEN', response.data.token)
-            // console.log(response.data)
-            // console.log(history)
+            history.push("/dashboard")
+            console.log(props)
+            setupSocket()
         }).catch( err => {
-            console.log(err)
+            // console.log(err)
             makeToast('error', err.message)
         })
     }
@@ -56,3 +57,5 @@ export default function LoginPage({history}) {
         </div>
     )
 }
+
+export default withRouter(LoginPage)

@@ -1,6 +1,30 @@
 import React from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default function DashboardPage() {
+
+    const [chatRooms, setChatRooms] = React.useState([])
+
+    const getChatRooms = ()=>{
+        axios
+        .get('http://localhost:8081/chatroom', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('DC_TOKEN')
+            }
+        })
+        .then( response => {
+            setChatRooms(response.data)
+        })
+        .catch( err => {
+            setTimeout(getChatRooms, 3000)
+        })
+    }
+
+    React.useEffect( () => {
+        getChatRooms()
+    }, [])
+
     return (
         <div className="card">
         <div className="cardHeader">Dashboard</div>
@@ -17,18 +41,12 @@ export default function DashboardPage() {
             <button>Create Chat Room</button>
 
             <div className="chatrooms">
-                <div className="chatroom">
-                    <div>developers Only</div>
-                    <div className="join">Join</div>
-                </div>
-                <div className="chatroom">
-                    <div>developers Only</div>
-                    <div className="join">Join</div>
-                </div>
-                <div className="chatroom">
-                    <div>developers Only</div>
-                    <div className="join">Join</div>
-                </div>
+                {chatRooms.map((chatroom) => (
+                    <div key={chatroom._id} className="chatroom">
+                        <div>{chatroom.name}</div>
+                        <Link to={`/chatroom/${chatroom._id}`}><div className="join">Join</div></Link>
+                    </div>
+                ))}
             </div>
         </div>
     </div>

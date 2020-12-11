@@ -13,7 +13,7 @@ export default function RegisterPage({history}) {
         const email = emailRef.current.value
         const password = passwordRef.current.value
 
-        axios.post('http://localhost:8080/user/register',{
+        axios.post('http://localhost:8081/user/register',{
             name,
             email,
             password,
